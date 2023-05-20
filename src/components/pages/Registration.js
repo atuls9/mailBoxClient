@@ -1,8 +1,11 @@
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 import React, { useRef, useState } from "react";
+
 const Registration = () => {
   const [errorShow, setErrorShow] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
+  const history = useHistory();
 
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -10,6 +13,10 @@ const Registration = () => {
   const switchHandler = () => {
     setIsLogin(!isLogin);
     setErrorShow(false);
+  };
+
+  const goToforgetpassword = () => {
+    history.push("/forgetpassword");
   };
 
   const signUpHandler = (e) => {
@@ -43,6 +50,42 @@ const Registration = () => {
       setErrorShow(true);
     }
   };
+
+  const loginHandler = (e) => {
+    e.preventDefault();
+    setErrorShow(false);
+    if (emailRef.current.value && passwordRef.current.value) {
+      localStorage.setItem("email", emailRef.current.value);
+      axios
+        .post(
+          `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCu42D-SrKCFTc8BvBksZi2Op0nMxIAsRs`,
+          {
+            email: emailRef.current.value,
+            password: passwordRef.current.value,
+            returnSecureToken: true,
+          }
+        )
+        .then((res) => {
+          console.log("user has logged in successfully");
+          localStorage.setItem("token", res.data.idToken);
+          history.push("/profile");
+
+          console.log(res.data);
+          if (res.data.displayName && res.data.profilePicture) {
+          } else {
+          }
+        })
+        .catch((error) => {
+          alert(error.response.data.error.message);
+        });
+    } else {
+      setTimeout(() => {
+        setErrorShow(false);
+      }, 3000);
+      setErrorShow(true);
+    }
+  };
+
   return (
     <div
       className="container-fluid"
@@ -89,6 +132,7 @@ const Registration = () => {
                   Confirm Password
                 </label>
                 <input
+                  type="password"
                   placeholder="Confirm Password"
                   className="form-control"
                   ref={confirmPasswordRef}
@@ -111,8 +155,19 @@ const Registration = () => {
                 </button>
               )}
               {!isLogin && (
-                <button className="btn btn-warning mt-3 p-2 rounded-pill fw-bold">
+                <button
+                  className="btn btn-warning mt-3 p-2 rounded-pill fw-bold"
+                  onClick={loginHandler}
+                >
                   Login
+                </button>
+              )}
+              {!isLogin && (
+                <button
+                  className="btn btn-link fw-bold"
+                  onClick={goToforgetpassword}
+                >
+                  Forget Password
                 </button>
               )}
             </div>
