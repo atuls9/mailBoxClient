@@ -72,7 +72,7 @@ const Registration = () => {
           console.log("user has logged in successfully");
           localStorage.setItem("token", res.data.idToken);
           dispatch(authActions.login());
-          history.push("/composemail");
+          history.push("/");
           // console.log(res.data);
           if (res.data.displayName && res.data.profilePicture) {
           } else {
