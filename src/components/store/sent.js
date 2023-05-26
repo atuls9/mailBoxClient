@@ -8,12 +8,23 @@ const sentSlice = createSlice({
   name: "sent",
   initialState: initialsentState,
   reducers: {
-    getsentMail(state, action) {
-      state.sentMails = action.payload;
+    getSentMail(state, action) {
+      if (!action.payload) {
+        state.sentMails = [];
+      } else {
+        state.sentMails = [...action.payload];
+      }
+
+      console.log("state.sentMails", state.sentMails);
     },
     addEmail(state, action) {
       state.sentMails = [...state.sentMails, action.payload];
       console.log(" sent mails", state.sentMails);
+    },
+    removeEmail(state, action) {
+      let updatedItems;
+      updatedItems = state.sentMails.filter((el) => el.id !== action.payload);
+      state.sentMails = [...updatedItems];
     },
   },
 });
