@@ -4,7 +4,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { sentActions } from "./store/sent";
 
-const Compose = () => {
+const Compose = (props) => {
   let sentByRegex = localStorage.getItem("email").replace(/[^a-zA-Z0-9 ]/g, "");
   const dispatch = useDispatch();
   const dataRef = useRef(" ");
@@ -70,7 +70,9 @@ const Compose = () => {
         </div>
       </div>
       <div className="mb-3 row">
-        <label className="col-sm-1 col-form-label text-start">Subject</label>
+        <label className="col-sm-1 col-form-label text-start">
+          Subject {props.name}
+        </label>
         <div className="col-sm-11">
           <input
             type="text"

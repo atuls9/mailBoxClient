@@ -6,50 +6,52 @@ import ForgetPassword from "./components/pages/ForgetPassword";
 import Compose from "./components/Compose";
 import { useSelector, useDispatch } from "react-redux";
 import LandingPage from "./components/pages/LandingPage";
-import { useEffect } from "react";
-import axios from "axios";
-import { authActions } from "./components/store/auth";
 import Navbar from "./components/Navbar";
-import { receivedActions } from "./components/store/received";
+import { useEffect } from "react";
+import { authActions } from "./components/store/auth";
 
 function App() {
   const auth = useSelector((state) => state.auth.isAuthenticated);
-  const email = useSelector((state) => state.auth.email);
   const dispatch = useDispatch();
-  let emaliRegEx;
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
       dispatch(authActions.login());
     }
-    if (auth) {
-      emaliRegEx = localStorage.getItem("email").replace(/[^a-zA-Z0-9 ]/g, "");
-      axios
-        .get(
-          `https://mailboxclient-24879-default-rtdb.firebaseio.com/${emaliRegEx}/received.json`
-        )
-        .then((res) => {
-          console.log(" getdata", res);
-          if (res.data) {
-            const firebaseIDs = Object.keys(res.data);
-            console.log("firebaseIDs", firebaseIDs);
-            const newItems = [];
-            Object.values(res.data).forEach((el) => {
-              console.log("el.body", el.body);
-              newItems.push({
-                ...el.body,
-                id: firebaseIDs[newItems.length],
-                key: firebaseIDs[newItems.length],
-              });
-            });
-            dispatch(receivedActions.getReceivedMail(newItems));
-            console.log("newItems", newItems);
-            console.log("object", newItems[0].data);
-          }
-          // dispatch(expenseActions.getItems(newItems));
-        });
-    }
-  }, [auth]);
+  });
+  // const email = useSelector((state) => state.auth.email);
+  // let emaliRegEx;
+
+  // useEffect(() => {
+  //
+  //   if (auth) {
+  //     emaliRegEx = localStorage.getItem("email").replace(/[^a-zA-Z0-9 ]/g, "");
+  //     axios
+  //       .get(
+  //         `https://mailboxclient-24879-default-rtdb.firebaseio.com/${emaliRegEx}/received.json`
+  //       )
+  //       .then((res) => {
+  //         console.log(" getdata", res);
+  //         if (res.data) {
+  //           const firebaseIDs = Object.keys(res.data);
+  //           console.log("firebaseIDs", firebaseIDs);
+  //           const newItems = [];
+  //           Object.values(res.data).forEach((el) => {
+  //             console.log("el.body", el.body);
+
+  //             newItems.push({
+  //               ...el.body,
+  //               id: firebaseIDs[newItems.length],
+  //               key: firebaseIDs[newItems.length],
+  //             });
+  //           });
+  //           console.log("newItems", newItems);
+  //           dispatch(receivedActions.getReceivedMail(newItems));
+  //         }
+  //         // dispatch(expenseActions.getItems(newItems));
+  //       });
+  //   }
+  // }, [auth]);
 
   return (
     <div className="App">
