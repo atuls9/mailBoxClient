@@ -21,6 +21,13 @@ const receivedSlice = createSlice({
     addEmail(state, action) {
       state.receivedMails = [...state.receivedMails, action.payload];
     },
+    removeEmail(state, action) {
+      let updatedItems;
+      updatedItems = state.receivedMails.filter(
+        (el) => el.id !== action.payload
+      );
+      state.receivedMails = [...updatedItems];
+    },
     readMail(state, action) {
       let updatatedItem = [];
       for (let el of state.receivedMails) {
