@@ -18,6 +18,8 @@ function LandingPage() {
   const auth = useSelector((state) => state.auth.isAuthenticated);
   const items = useSelector((state) => state.received.receivedMails);
   const sent = useSelector((state) => state.sent.sentMails);
+  const [counter, setCount] = useState(0);
+
   const [readMail, setReadMail] = useState([]);
   const [readsentMail, setReadSentMail] = useState([]);
   const [isreadSentMail, setIsReadSentMail] = useState(false);
@@ -26,8 +28,10 @@ function LandingPage() {
 
   const dispatch = useDispatch();
   let emaliRegEx;
-
   useEffect(() => {
+    setTimeout(() => {
+      setCount((counter) => counter + 1);
+    }, 2000);
     if (localStorage.getItem("token")) {
       dispatch(authActions.login());
     }
@@ -82,7 +86,7 @@ function LandingPage() {
           }
         });
     }
-  }, [auth]);
+  }, [auth, counter]);
 
   const readsentMailHandler = (item) => {
     setReadSentMail(item);
