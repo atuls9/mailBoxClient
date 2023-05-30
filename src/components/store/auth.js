@@ -14,8 +14,6 @@ const authSlice = createSlice({
       state.isAuthenticated = true;
       state.token = localStorage.getItem("token");
       state.email = localStorage.getItem("email");
-      console.log(" token", localStorage.getItem("token"));
-      console.log(state.email);
     },
     logout(state) {
       state.isAuthenticated = false;

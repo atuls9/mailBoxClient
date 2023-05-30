@@ -19,39 +19,6 @@ function App() {
       dispatch(authActions.login());
     }
   });
-  // const email = useSelector((state) => state.auth.email);
-  // let emaliRegEx;
-
-  // useEffect(() => {
-  //
-  //   if (auth) {
-  //     emaliRegEx = localStorage.getItem("email").replace(/[^a-zA-Z0-9 ]/g, "");
-  //     axios
-  //       .get(
-  //         `https://mailboxclient-24879-default-rtdb.firebaseio.com/${emaliRegEx}/received.json`
-  //       )
-  //       .then((res) => {
-  //         console.log(" getdata", res);
-  //         if (res.data) {
-  //           const firebaseIDs = Object.keys(res.data);
-  //           console.log("firebaseIDs", firebaseIDs);
-  //           const newItems = [];
-  //           Object.values(res.data).forEach((el) => {
-  //             console.log("el.body", el.body);
-
-  //             newItems.push({
-  //               ...el.body,
-  //               id: firebaseIDs[newItems.length],
-  //               key: firebaseIDs[newItems.length],
-  //             });
-  //           });
-  //           console.log("newItems", newItems);
-  //           dispatch(receivedActions.getReceivedMail(newItems));
-  //         }
-  //         // dispatch(expenseActions.getItems(newItems));
-  //       });
-  //   }
-  // }, [auth]);
 
   return (
     <div className="App">

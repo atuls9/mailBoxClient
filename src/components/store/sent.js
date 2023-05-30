@@ -14,12 +14,9 @@ const sentSlice = createSlice({
       } else {
         state.sentMails = [...action.payload];
       }
-
-      console.log("state.sentMails", state.sentMails);
     },
     addEmail(state, action) {
       state.sentMails = [...state.sentMails, action.payload];
-      console.log(" sent mails", state.sentMails);
     },
     removeEmail(state, action) {
       let updatedItems;
